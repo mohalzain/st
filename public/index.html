@@ -1,0 +1,168 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Daylist — Task Tracker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main class="app">
+      <!-- HEADER -->
+
+      <header class="header">
+        <div>
+          <p class="date" id="currentDate">MONDAY, AUGUST 10</p>
+
+          <h1>Make today count.</h1>
+
+          <p class="subtitle">A little progress every day.</p>
+        </div>
+
+        <div class="streak">
+          <span>🔥</span>
+          <div>
+            <small>STREAK</small>
+            <strong id="streak">7 days</strong>
+          </div>
+        </div>
+      </header>
+
+      <!-- PROGRESS -->
+
+      <section class="top-grid">
+        <div class="progress-card">
+          <div class="progress-info">
+            <p class="label">TODAY</p>
+
+            <h2 id="progressTitle">Keep going.</h2>
+
+            <p id="progressMessage">
+              You're making progress. Finish one more task.
+            </p>
+          </div>
+
+          <div class="progress-circle">
+            <svg viewBox="0 0 100 100">
+              <circle class="progress-background" cx="50" cy="50" r="42" />
+
+              <circle
+                class="progress-bar"
+                id="progressBar"
+                cx="50"
+                cy="50"
+                r="42"
+              />
+            </svg>
+
+            <div class="progress-number">
+              <strong id="progressPercent">0%</strong>
+              <span>done</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS -->
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">TASKS</span>
+            <strong id="totalTasks">0</strong>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">DONE</span>
+            <strong id="completedTasks">0</strong>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">LEFT</span>
+            <strong id="remainingTasks">0</strong>
+          </div>
+
+          <div class="stat">
+            <span class="stat-label">POINTS</span>
+            <strong id="points">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- TASKS -->
+
+      <section class="tasks-section">
+        <div class="section-header">
+          <div>
+            <p class="label">YOUR DAY</p>
+
+            <h2>Tasks</h2>
+          </div>
+
+          <span id="taskCount"> 0 tasks </span>
+        </div>
+
+        <!-- ADD TASK -->
+
+        <form class="add-task" id="taskForm">
+          <input
+            id="taskInput"
+            type="text"
+            placeholder="Add something you want to get done..."
+            autocomplete="off"
+          />
+
+          <select id="priorityInput">
+            <option value="low">Low</option>
+
+            <option value="medium" selected>Medium</option>
+
+            <option value="high">High</option>
+          </select>
+
+          <button type="submit">Add</button>
+        </form>
+
+        <!-- FILTER -->
+
+        <nav class="filters">
+          <button class="filter active" data-filter="all">All</button>
+
+          <button class="filter" data-filter="active">Active</button>
+
+          <button class="filter" data-filter="completed">Completed</button>
+        </nav>
+
+        <!-- TASK LIST -->
+
+        <div class="task-list" id="taskList"></div>
+
+        <!-- EMPTY -->
+
+        <div class="empty" id="emptyState">
+          <div class="empty-check">✓</div>
+
+          <h3>Nothing left here.</h3>
+
+          <p>Add a task above and get started.</p>
+        </div>
+      </section>
+
+      <footer>
+        <span>DAYLIST</span>
+        <p>Focus on today.</p>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
