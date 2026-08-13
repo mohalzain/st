@@ -1,29 +1,4 @@
-let tasks = JSON.parse(localStorage.getItem("daylist-tasks")) || [
-{
-id: 1,
-title: "Plan today's priorities",
-priority: "high",
-completed: true
-},
-{
-id: 2,
-title: "Work on the main project",
-priority: "high",
-completed: false
-},
-{
-id: 3,
-title: "Read for 20 minutes",
-priority: "low",
-completed: false
-},
-{
-id: 4,
-title: "Go for a short walk",
-priority: "medium",
-completed: false
-}
-];
+let tasks =  [];
 
 let currentFilter = "all";
 
@@ -53,9 +28,7 @@ medium: 10,
 high: 15
 };
 
-function saveTasks() {
-localStorage.setItem("daylist-tasks", JSON.stringify(tasks));
-}
+
 
 function setDate() {
 const date = new Date();
@@ -71,28 +44,27 @@ day: "numeric"
 
 function renderTasks() {
 taskList.innerHTML = "";
-
+fetch('/render-tasks',{method:'GET'})
+.then(data=>{
+  return data.json()
+})
+.then(data=>{
+tasks = data
 const filteredTasks = tasks.filter((task) => {
-if (currentFilter === "active") return !task.completed;
-if (currentFilter === "completed") return task.completed;
-
-```
+if (currentFilter == "active") return !task.completed;
+if (currentFilter == "completed") return task.completed;
 return true;
-```
-
 });
 
 filteredTasks.forEach((task) => {
 const taskElement = document.createElement("article");
-
-
 taskElement.className = `task${task.completed ? " completed" : ""}`;
 
 taskElement.innerHTML = `
   <button
     class="checkbox${task.completed ? " checked" : ""}"
     aria-label="Complete task"
-    data-id="${task.id}"
+    data-id="${task.title}"
   >
     ${task.completed ? "✓" : ""}
   </button>
@@ -116,19 +88,18 @@ taskElement.innerHTML = `
   <button
     class="delete"
     aria-label="Delete task"
-    data-id="${task.id}"
+    data-id="${task.title}"
   >
     ×
   </button>
 `;
-
 taskList.appendChild(taskElement);
-
-
+})
 });
 
 updateEmptyState();
 updateStats();
+console.log(tasks)
 }
 
 function updateEmptyState() {
@@ -146,38 +117,73 @@ const title = taskInput.value.trim();
 if (!title) {
 taskInput.focus();
 return;
-}
 
-tasks.unshift({
+}
+const taska = {
 id: Date.now(),
 title,
 priority: priorityInput.value,
 completed: false
-});
+}
 
-saveTasks();
-renderTasks();
+const packet = JSON.stringify(taska)
+
+fetch('/add-task',{method:'POST',headers:{ 'Content-Type': 'application/json'},body:packet})
+.then(ok=>{
+  return ok.json()
+})
+.then(ok=>{
+  console.log(ok)
+  tasks.unshift({
+  id: Date.now(),
+  title,
+  priority: priorityInput.value,
+  completed: false
+  });
+  renderTasks();
+})
+.catch(err=>{
+  console.log(err)
+})
+
 
 taskInput.value = "";
 taskInput.focus();
 }
 
-function toggleTask(id) {
-const task = tasks.find((task) => task.id === id);
+function toggleTask(title) {
+  
+const task = tasks.find((task) => task.title === title);
 
 if (!task) return;
-
 task.completed = !task.completed;
+const packet = JSON.stringify({title:task.title,completed:task.completed})
+fetch('/completed-task',{method:"POST",headers:{'Content-Type': 'application/json'},body:packet})
+.then(data=>{
+  return data.json()
+})
+.then(data=>{
+  console.log(data);
+  renderTasks();
+})
 
-saveTasks();
-renderTasks();
 }
 
-function deleteTask(id) {
-tasks = tasks.filter((task) => task.id !== id);
+function deleteTask(title) {
+task = tasks.filter((tas)=> tas.title == title)
+tasks = tasks.filter((task) => task.title !== title);
 
-saveTasks();
-renderTasks();
+const packet = JSON.stringify({title:task[0].title})
+
+fetch('/delete-task',{method:"POST",headers:{'Content-Type': 'application/json'},body:packet})
+.then(data=>{
+  return data.json()
+})
+.then(data=>{
+  console.log(data);
+ 
+})
+ renderTasks();
 }
 
 function updateStats() {
@@ -196,9 +202,7 @@ const percentage = total === 0
 const totalPoints = tasks.reduce((sum, task) => {
 if (!task.completed) return sum;
 
-```
 return sum + POINTS[task.priority];
-```
 
 }, 0);
 
@@ -234,9 +238,9 @@ progressTitle.textContent = "Start small.";
 progressMessage.textContent =
 "Add your first task and make today count.";
 
-```
+
 return;
-```
+
 
 }
 
@@ -245,9 +249,9 @@ progressTitle.textContent = "Ready when you are.";
 progressMessage.textContent =
 "Start with one task. Momentum comes after.";
 
-```
+
 return;
-```
+
 
 }
 
@@ -256,9 +260,9 @@ progressTitle.textContent = "You're getting there.";
 progressMessage.textContent =
 "Keep going. One completed task at a time.";
 
-```
+
 return;
-```
+
 
 }
 
@@ -267,9 +271,9 @@ progressTitle.textContent = "Almost there.";
 progressMessage.textContent =
 "You've done the hard part. Finish strong.";
 
-```
+
 return;
-```
+
 
 }
 
@@ -280,7 +284,7 @@ progressMessage.textContent =
 
 function updateStreak(completed) {
 streakElement.textContent =
-completed > 0 ? "7 days" : "0 days";
+completed > 0 ? "1 days" : "0 days";
 }
 
 function escapeHTML(text) {
@@ -294,16 +298,19 @@ return element.innerHTML;
 taskForm.addEventListener("submit", addTask);
 
 taskList.addEventListener("click", (event) => {
+
 const checkbox = event.target.closest(".checkbox");
 const deleteButton = event.target.closest(".delete");
 
 if (checkbox) {
-toggleTask(Number(checkbox.dataset.id));
+  //console.log(event.target.dataset.id)
+toggleTask(event.target.dataset.id);
 return;
 }
 
 if (deleteButton) {
-deleteTask(Number(deleteButton.dataset.id));
+  //console.log(event.target.dataset.id)
+deleteTask(event.target.dataset.id);
 }
 });
 
@@ -313,13 +320,13 @@ document.querySelectorAll(".filter").forEach((filter) => {
 filter.classList.remove("active");
 });
 
-```
+
 button.classList.add("active");
 
 currentFilter = button.dataset.filter;
 
 renderTasks();
-```
+
 
 });
 });
