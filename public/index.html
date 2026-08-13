@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
@@ -19,11 +19,9 @@
 
   <body>
     <main class="app">
-      <!-- HEADER -->
-
       <header class="header">
         <div>
-          <p class="date" id="currentDate">MONDAY, AUGUST 10</p>
+          <p class="date" id="currentDate"></p>
 
           <h1>Make today count.</h1>
 
@@ -32,24 +30,23 @@
 
         <div class="streak">
           <span>🔥</span>
+
           <div>
             <small>STREAK</small>
-            <strong id="streak">7 days</strong>
+            <strong id="streak">0 days</strong>
           </div>
         </div>
       </header>
-
-      <!-- PROGRESS -->
 
       <section class="top-grid">
         <div class="progress-card">
           <div class="progress-info">
             <p class="label">TODAY</p>
 
-            <h2 id="progressTitle">Keep going.</h2>
+            <h2 id="progressTitle">Ready when you are.</h2>
 
             <p id="progressMessage">
-              You're making progress. Finish one more task.
+              Start with one task. Momentum comes after.
             </p>
           </div>
 
@@ -72,8 +69,6 @@
             </div>
           </div>
         </div>
-
-        <!-- STATS -->
 
         <div class="stats">
           <div class="stat">
@@ -98,20 +93,15 @@
         </div>
       </section>
 
-      <!-- TASKS -->
-
       <section class="tasks-section">
         <div class="section-header">
           <div>
             <p class="label">YOUR DAY</p>
-
             <h2>Tasks</h2>
           </div>
 
-          <span id="taskCount"> 0 tasks </span>
+          <span id="taskCount">0 tasks</span>
         </div>
-
-        <!-- ADD TASK -->
 
         <form class="add-task" id="taskForm">
           <input
@@ -123,30 +113,28 @@
 
           <select id="priorityInput">
             <option value="low">Low</option>
-
             <option value="medium" selected>Medium</option>
-
             <option value="high">High</option>
           </select>
 
           <button type="submit">Add</button>
         </form>
 
-        <!-- FILTER -->
-
         <nav class="filters">
-          <button class="filter active" data-filter="all">All</button>
+          <button class="filter active" data-filter="all" type="button">
+            All
+          </button>
 
-          <button class="filter" data-filter="active">Active</button>
+          <button class="filter" data-filter="active" type="button">
+            Active
+          </button>
 
-          <button class="filter" data-filter="completed">Completed</button>
+          <button class="filter" data-filter="completed" type="button">
+            Completed
+          </button>
         </nav>
 
-        <!-- TASK LIST -->
-
         <div class="task-list" id="taskList"></div>
-
-        <!-- EMPTY -->
 
         <div class="empty" id="emptyState">
           <div class="empty-check">✓</div>
@@ -163,6 +151,6 @@
       </footer>
     </main>
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
   </body>
 </html>
