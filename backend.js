@@ -1,6 +1,7 @@
 import express, { json, urlencoded } from "express";
 import dotenv from 'dotenv'
 import mariadb from 'mariadb'
+import crypto from 'crypto'
 
 dotenv.config({path:'./enviroment.env'})
 const path = process.cwd()
@@ -14,6 +15,7 @@ app.use(express.static('./public'))
 app.get('/',(req,res)=>{
     res.sendFile(`${path}/public/index.html`)
 })
+
 app.post('/add-task',(req,res)=>{
     mariadb.createConnection({host:process.env.HOST,user:process.env.USER,password:process.env.password,database:process.env.DATABASE})
     .then(conn=>{
@@ -54,7 +56,27 @@ app.post('/delete-task',(req,res)=>{
         res.status(405).send(JSON.stringify({status:'failed',message:'incompleted db'}))
     })
 })
+app.get('/login',(req,res)=>{
+    res.sendFile(`${path}/public/login.html`)
+})
+app.post('/login',(req,res)=>{
+    //console.log(req)
+    console.log(req.body)
+    let data = req.body.data
+    data =  Buffer.from(data,'base64')
+    console.log(data)
+    data = data.toString()
+    console.log(data)
+    data = data.split(':')
+    const username = data[0]
+    const password = crypto.createHash('SHA256').update(data[1]).digest('hex')
+    console.log(password)
+    mariadb.createConnection({host:process.env.HOST,user:process.env.USER,password:process.env.password,database:process.env.DATABASE})
+    .then(conn=>{
+       conn.query('SELECT username,password FROM Users WHERE username = ?',[username]).then(data=>{console.log(data)})
+    })
 
+})
 
 
 
