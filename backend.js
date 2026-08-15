@@ -89,7 +89,7 @@ app.post('/register',(req,res)=>{
        .then(data=>{
             res.status(200).send({status:'success',message:'Account Created'})
         }).catch(err=>{
-            console.log(`Querry Error: ${}`)
+            console.log(`Querry Error: ${err}`)
             res.status(401).send({status:'failed',message:'Username Already Exist'})
         })
     }).catch(err=>{
