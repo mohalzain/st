@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Daylist — Make today count.</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="homepage.css" />
+  </head>
+
+  <body>
+    <nav class="nav">
+      <div class="nav-inner">
+        <div class="brand">
+          <span class="brand-name">Daylist</span>
+          <span class="brand-tag">TASK TRACKER</span>
+        </div>
+
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#demo">Try it</a>
+          <a href="#how">How it works</a>
+          <a href="./login.html">Log in</a>
+          <button class="btn-dark btn-sm" type="button">
+            <a href="./register.html">Create free account</a>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="pill">FREE ACCOUNT. NOTHING LOST.</span>
+
+      <h1>
+        Make today count.<br /><span class="muted">Then do it again.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Daylist is a one-day task tracker. No projects, no boards, no backlog
+        guilt — just the handful of things you're doing today, and a streak you
+        won't want to break.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-dark btn-lg" type="button">
+          <a href="./register.html">Create free account</a>
+        </button>
+        <a class="btn-ghost btn-lg" href="#demo">Try it right here</a>
+      </div>
+
+      <p class="hero-note">
+        Sign up in seconds. Your tasks, streak and points save to your account.
+      </p>
+    </header>
+
+    <section class="section" id="demo">
+      <div class="section-head">
+        <div>
+          <p class="label">LIVE DEMO</p>
+          <h2>This is the whole app. Go ahead.</h2>
+        </div>
+
+        <span class="section-note">Sandbox — sign in to keep your list.</span>
+      </div>
+
+      <div class="app-shell">
+        <div class="top-grid">
+          <div class="progress-card">
+            <div class="progress-info">
+              <p class="label">TODAY</p>
+              <h3 id="progressTitle">Ready when you are.</h3>
+              <p id="progressMessage">
+                Start with one task. Momentum comes after.
+              </p>
+            </div>
+
+            <div class="progress-circle">
+              <svg viewBox="0 0 100 100">
+                <circle
+                  class="progress-background"
+                  cx="50"
+                  cy="50"
+                  r="42"
+                ></circle>
+                <circle
+                  class="progress-bar"
+                  id="progressBar"
+                  cx="50"
+                  cy="50"
+                  r="42"
+                ></circle>
+              </svg>
+
+              <div class="progress-number">
+                <strong id="progressPercent">0%</strong>
+                <span>done</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-label">TASKS</span>
+              <strong id="totalTasks">0</strong>
+            </div>
+
+            <div class="stat">
+              <span class="stat-label">DONE</span>
+              <strong id="completedTasks">0</strong>
+            </div>
+
+            <div class="stat">
+              <span class="stat-label">LEFT</span>
+              <strong id="remainingTasks">0</strong>
+            </div>
+
+            <div class="stat">
+              <span class="stat-label">POINTS</span>
+              <strong id="points">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <form class="add-task" id="taskForm">
+          <input
+            id="taskInput"
+            type="text"
+            placeholder="Add something you want to get done..."
+            autocomplete="off"
+          />
+
+          <select id="priorityInput">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+
+          <button type="submit">Add</button>
+        </form>
+
+        <nav class="filters">
+          <button class="filter active" data-filter="all" type="button">
+            All
+          </button>
+          <button class="filter" data-filter="active" type="button">
+            Active
+          </button>
+          <button class="filter" data-filter="completed" type="button">
+            Completed
+          </button>
+        </nav>
+
+        <div class="task-list" id="taskList"></div>
+
+        <div class="empty" id="emptyState">
+          <div class="empty-check">✓</div>
+          <h3>Nothing left here.</h3>
+          <p>Add a task above and get started.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <p class="label">WHAT'S INSIDE</p>
+      <h2 class="big-head">Six small things that keep you honest.</h2>
+
+      <div class="feature-grid">
+        <article class="card">
+          <div class="icon icon-green">%</div>
+          <h3>A ring that fills as you go</h3>
+          <p>
+            Your whole day as one number. Watch it close, and the last two tasks
+            stop feeling optional.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon icon-yellow">🔥</div>
+          <h3>Streaks you'll defend</h3>
+          <p>
+            Finish your list, keep the fire. Miss a day and it resets — which is
+            exactly why it works.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon icon-green">+5</div>
+          <h3>Points for finishing</h3>
+          <p>
+            Every completed task pays out. Hard ones pay more. It's a scoreboard
+            for showing up.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="pri-row">
+            <span class="priority high">HIGH</span>
+            <span class="priority medium">MED</span>
+            <span class="priority low">LOW</span>
+          </div>
+
+          <h3>Three priorities, that's it</h3>
+          <p>
+            High, medium, low. No labels, no tags, no taxonomy to maintain at
+            11pm.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon icon-gray">⊟</div>
+          <h3>All, active, completed</h3>
+          <p>
+            One tap to hide what's done, one tap to admire it. That's the entire
+            filtering system.
+          </p>
+        </article>
+
+        <article class="card card-dark">
+          <div class="icon icon-dark">$0</div>
+          <h3>Free account, saved forever</h3>
+          <p>
+            Sign in anywhere and your list, streak and points are exactly where
+            you left them. No plans, no upsell.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="how-panel">
+        <p class="label">HOW IT WORKS</p>
+        <h2 class="how-head">Three steps. Every morning.</h2>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <h3>Dump the day in</h3>
+            <p>
+              Type each thing, pick a priority, hit Add. Takes about ninety
+              seconds.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">02</div>
+            <h3>Check things off</h3>
+            <p>
+              The ring fills, points land, the list shrinks. That's the whole
+              loop.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-num">03</div>
+            <h3>Come back tomorrow</h3>
+            <p>Fresh list, streak intact, points banked in your account.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section closer">
+      <h2>Your day is already planned. Somewhere.</h2>
+      <p>Put it here instead, and watch it actually get done.</p>
+      <button class="btn-dark btn-lg" type="button">Create free account</button>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>DAYLIST</span>
+        <p>Focus on today.</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var PRI = {
+          high: { label: "HIGH", pts: 15 },
+          medium: { label: "MEDIUM", pts: 10 },
+          low: { label: "LOW", pts: 5 },
+        };
+
+        var tasks = [
+          {
+            id: 1,
+            title: "Ship the pricing page copy",
+            pri: "high",
+            done: true,
+            when: "9:12 AM",
+          },
+          {
+            id: 2,
+            title: "30 minutes on the guitar",
+            pri: "low",
+            done: false,
+            when: "9:14 AM",
+          },
+          {
+            id: 3,
+            title: "Call the dentist back",
+            pri: "medium",
+            done: false,
+            when: "9:15 AM",
+          },
+          {
+            id: 4,
+            title: "Read one chapter before bed",
+            pri: "low",
+            done: false,
+            when: "9:15 AM",
+          },
+        ];
+
+        var seq = 5;
+        var filter = "all";
+
+        var list = document.getElementById("taskList");
+        var empty = document.getElementById("emptyState");
+        var form = document.getElementById("taskForm");
+        var input = document.getElementById("taskInput");
+        var priInput = document.getElementById("priorityInput");
+
+        function now() {
+          return new Date().toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        }
+
+        function render() {
+          var total = tasks.length;
+          var done = tasks.filter(function (t) {
+            return t.done;
+          }).length;
+          var pct = total ? Math.round((done / total) * 100) : 0;
+          var points = tasks.reduce(function (s, t) {
+            return s + (t.done ? PRI[t.pri].pts : 0);
+          }, 0);
+
+          document.getElementById("totalTasks").textContent = total;
+          document.getElementById("completedTasks").textContent = done;
+          document.getElementById("remainingTasks").textContent = total - done;
+          document.getElementById("points").textContent = points;
+          document.getElementById("progressPercent").textContent = pct + "%";
+          document.getElementById("progressBar").style.strokeDashoffset =
+            264 - (264 * pct) / 100;
+
+          var title = "Ready when you are.";
+          var msg = "Start with one task. Momentum comes after.";
+
+          if (total && done === 0) {
+            title = "Nothing done yet.";
+            msg = "Pick the easiest one and knock it out.";
+          } else if (done && done < total) {
+            title = "You're moving.";
+            msg =
+              done +
+              " down, " +
+              (total - done) +
+              " to go. Keep the ring closing.";
+          } else if (total && done === total) {
+            title = "Day cleared.";
+            msg = "Every task done. Streak safe — see you tomorrow.";
+          }
+
+          document.getElementById("progressTitle").textContent = title;
+          document.getElementById("progressMessage").textContent = msg;
+
+          var visible = tasks.filter(function (t) {
+            if (filter === "active") return !t.done;
+            if (filter === "completed") return t.done;
+            return true;
+          });
+
+          list.innerHTML = "";
+
+          visible.forEach(function (t) {
+            var row = document.createElement("div");
+            row.className = "task" + (t.done ? " completed" : "");
+
+            var box = document.createElement("button");
+            box.type = "button";
+            box.className = "checkbox" + (t.done ? " checked" : "");
+            box.textContent = t.done ? "✓" : "";
+            box.addEventListener("click", function () {
+              t.done = !t.done;
+              render();
+            });
+
+            var content = document.createElement("div");
+            content.className = "task-content";
+
+            var titleEl = document.createElement("div");
+            titleEl.className = "task-title";
+            titleEl.textContent = t.title;
+
+            var meta = document.createElement("div");
+            meta.className = "task-meta";
+
+            var pri = document.createElement("span");
+            pri.className = "priority " + t.pri;
+            pri.textContent = PRI[t.pri].label;
+
+            var when = document.createElement("span");
+            when.textContent = t.when;
+
+            meta.appendChild(pri);
+            meta.appendChild(when);
+            content.appendChild(titleEl);
+            content.appendChild(meta);
+
+            var del = document.createElement("button");
+            del.type = "button";
+            del.className = "delete";
+            del.textContent = "×";
+            del.addEventListener("click", function () {
+              tasks = tasks.filter(function (x) {
+                return x.id !== t.id;
+              });
+              render();
+            });
+
+            row.appendChild(box);
+            row.appendChild(content);
+            row.appendChild(del);
+            list.appendChild(row);
+          });
+
+          empty.classList.toggle("visible", visible.length === 0);
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var v = input.value.trim();
+          if (!v) return;
+
+          tasks.push({
+            id: seq++,
+            title: v,
+            pri: priInput.value,
+            done: false,
+            when: now(),
+          });
+          input.value = "";
+          render();
+        });
+
+        Array.prototype.forEach.call(
+          document.querySelectorAll(".filter"),
+          function (b) {
+            b.addEventListener("click", function () {
+              filter = b.dataset.filter;
+              Array.prototype.forEach.call(
+                document.querySelectorAll(".filter"),
+                function (x) {
+                  x.classList.toggle("active", x === b);
+                },
+              );
+              render();
+            });
+          },
+        );
+
+        render();
+      })();
+    </script>
+  </body>
+</html>

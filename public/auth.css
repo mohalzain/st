@@ -1,0 +1,268 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f7f8f6;
+  --card: #ffffff;
+
+  --text: #18201c;
+  --muted: #858d88;
+
+  --border: #e7eae7;
+
+  --green: #4d8f68;
+  --green-dark: #3f7957;
+}
+
+body {
+  min-height: 100vh;
+
+  background: var(--bg);
+  color: var(--text);
+
+  font-family: "DM Sans", sans-serif;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.auth {
+  width: 100%;
+  max-width: 390px;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.brand {
+  margin-bottom: 28px;
+}
+
+.brand h1 {
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 27px;
+  font-weight: 700;
+
+  letter-spacing: -1px;
+}
+
+.brand h1 span {
+  color: var(--green);
+}
+
+.brand p {
+  margin-top: 5px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.auth-card {
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  border-radius: 16px;
+
+  padding: 30px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.auth-header {
+  margin-bottom: 25px;
+}
+
+.auth-header .label {
+  color: var(--green);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+}
+
+.auth-header h2 {
+  margin-top: 7px;
+
+  font-family: "Space Grotesk", sans-serif;
+
+  font-size: 26px;
+  font-weight: 700;
+
+  letter-spacing: -0.8px;
+}
+
+.auth-header p {
+  margin-top: 7px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+  margin-bottom: 17px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  height: 47px;
+
+  padding: 0 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #fafbf9;
+
+  color: var(--text);
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+
+  transition: 0.2s ease;
+}
+
+.input::placeholder {
+  color: #adb3af;
+}
+
+.input:focus {
+  border-color: var(--green);
+
+  background: #fff;
+
+  box-shadow: 0 0 0 3px rgba(77, 143, 104, 0.08);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.auth-button {
+  width: 100%;
+  height: 47px;
+
+  margin-top: 5px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: var(--green);
+  color: white;
+
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.auth-button:hover {
+  background: var(--green-dark);
+}
+
+.auth-button:active {
+  transform: translateY(1px);
+}
+
+/* =========================
+   BOTTOM
+========================= */
+
+.auth-bottom {
+  margin-top: 23px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid var(--border);
+
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.auth-bottom a {
+  color: var(--green);
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.auth-bottom a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.auth-footer {
+  margin-top: 25px;
+
+  text-align: center;
+
+  color: #a0a6a2;
+
+  font-size: 11px;
+
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 450px) {
+  body {
+    padding: 18px;
+  }
+
+  .auth-card {
+    padding: 25px 22px;
+  }
+
+  .brand h1 {
+    font-size: 25px;
+  }
+}
