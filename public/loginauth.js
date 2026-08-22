@@ -25,6 +25,16 @@ function sendData(){
         encoded = btoa(encoded)
         encoded = JSON.stringify({data:encoded})
         fetch('/login',{method:'POST',headers:{ 'Content-Type': 'application/json'},body:encoded})
+        .then(data=>{
+                return data.json()}
+        )
+        .then(data=>{
+            console.log(data)
+            if (data.reqstatus == 'sucess'){
+            window.location.href = './index.html'
+            }
+            
+        }).catch(err=>{console.log(err)})
     }
 }
 

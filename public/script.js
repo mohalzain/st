@@ -22,41 +22,26 @@ const progressMessage = document.getElementById("progressMessage");
 const streakElement = document.getElementById("streak");
 const currentDate = document.getElementById("currentDate");
 
+
+const loading = document.getElementById('actionLoading')
+const loadingText = document.getElementById('loadingText')
+
 const POINTS = {
 low: 5,
 medium: 10,
 high: 15
 };
 
+function filterData(){
+  if (tasks.length > 0){
+    taskList.innerHTML = "";
+  const filteredTasks = tasks.filter((task) => {
+  if (currentFilter == "active") return !task.completed;
+  if (currentFilter == "completed") return task.completed;
 
-
-function setDate() {
-const date = new Date();
-
-currentDate.textContent = date
-.toLocaleDateString("en-US", {
-weekday: "long",
-month: "long",
-day: "numeric"
-})
-.toUpperCase();
-}
-
-function renderTasks() {
-taskList.innerHTML = "";
-fetch('/render-tasks',{method:'GET'})
-.then(data=>{
-  return data.json()
-})
-.then(data=>{
-tasks = data
-const filteredTasks = tasks.filter((task) => {
-if (currentFilter == "active") return !task.completed;
-if (currentFilter == "completed") return task.completed;
-return true;
-});
-
-filteredTasks.forEach((task) => {
+  return true;
+  })
+  filteredTasks.forEach((task) => {
 const taskElement = document.createElement("article");
 taskElement.className = `task${task.completed ? " completed" : ""}`;
 
@@ -95,10 +80,98 @@ taskElement.innerHTML = `
 `;
 taskList.appendChild(taskElement);
 })
-});
-
 updateEmptyState();
 updateStats();
+  }
+}
+
+
+function enableLoading(msg){
+  loadingText.textContent = msg
+  loading.classList.add('visible')
+
+}
+
+function disableLoading(){
+  loading.classList.remove('visible')
+}
+
+
+function setDate() {
+const date = new Date();
+
+currentDate.textContent = date
+.toLocaleDateString("en-US", {
+weekday: "long",
+month: "long",
+day: "numeric"
+})
+.toUpperCase();
+}
+
+function renderTasks() {
+taskList.innerHTML = "";
+enableLoading('Loading Tasks')
+fetch('/render-tasks',{method:'GET'})
+.then(data=>{
+  if (data.status == 200){
+    return data.json()
+  }
+  window.location.href = './login.html'
+})
+.then(data=>{
+tasks = data
+const filteredTasks = tasks.filter((task) => {
+if (currentFilter == "active") return !task.completed;
+if (currentFilter == "completed") return task.completed;
+
+return true;
+});
+disableLoading()
+tasks.forEach((task) => {
+const taskElement = document.createElement("article");
+taskElement.className = `task${task.completed ? " completed" : ""}`;
+
+taskElement.innerHTML = `
+  <button
+    class="checkbox${task.completed ? " checked" : ""}"
+    aria-label="Complete task"
+    data-id="${task.title}"
+  >
+    ${task.completed ? "✓" : ""}
+  </button>
+
+  <div class="task-content">
+    <div class="task-title">
+      ${escapeHTML(task.title)}
+    </div>
+
+    <div class="task-meta">
+      <span class="priority ${task.priority}">
+        ${task.priority.toUpperCase()}
+      </span>
+
+      <span>
+        ${task.completed ? "Completed" : "In progress"}
+      </span>
+    </div>
+  </div>
+
+  <button
+    class="delete"
+    aria-label="Delete task"
+    data-id="${task.title}"
+  >
+    ×
+  </button>
+`;
+taskList.appendChild(taskElement);
+})
+updateEmptyState();
+updateStats();
+});
+
+
 console.log(tasks)
 }
 
@@ -127,10 +200,12 @@ completed: false
 }
 
 const packet = JSON.stringify(taska)
-
 fetch('/add-task',{method:'POST',headers:{ 'Content-Type': 'application/json'},body:packet})
 .then(ok=>{
-  return ok.json()
+  if (ok.status == 200){
+    return ok.json()
+  }
+  window.location.href = './login.html'
 })
 .then(ok=>{
   console.log(ok)
@@ -160,7 +235,10 @@ task.completed = !task.completed;
 const packet = JSON.stringify({title:task.title,completed:task.completed})
 fetch('/completed-task',{method:"POST",headers:{'Content-Type': 'application/json'},body:packet})
 .then(data=>{
-  return data.json()
+  if (data.status == 200){
+    return data.json()
+  }
+  window.location.href = './login.html'
 })
 .then(data=>{
   console.log(data);
@@ -176,14 +254,16 @@ tasks = tasks.filter((task) => task.title !== title);
 const packet = JSON.stringify({title:task[0].title})
 
 fetch('/delete-task',{method:"POST",headers:{'Content-Type': 'application/json'},body:packet})
-.then(data=>{
-  return data.json()
+.then(data=>{if (data.status == 200){
+    return data.json()
+  }
+  window.location.href = './login.html'
 })
 .then(data=>{
   console.log(data);
- 
+  renderTasks();
 })
- renderTasks();
+ 
 }
 
 function updateStats() {
@@ -320,14 +400,10 @@ document.querySelectorAll(".filter").forEach((filter) => {
 filter.classList.remove("active");
 });
 
-
 button.classList.add("active");
 
 currentFilter = button.dataset.filter;
-
-renderTasks();
-
-
+filterData()
 });
 });
 
